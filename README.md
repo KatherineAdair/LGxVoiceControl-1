@@ -58,16 +58,64 @@ Create a DialogFlow Agent which accepts end-user's queries. It extracts keywords
 ### Linux Installation
 Use the termial for the installation
 #### Set-Up Firebase CLI
-1. Install node.js: <br/>
+1. Install all updates <br/>
+`sudo apt-get update`<br/>
+`sudo apt-get upgrade`
+2. Install curl: <br/>
+`sudo apt-get install curl`
+3. Install node.js: <br/>
 `curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -` <br/>
 `sudo apt-get install -y nodejs`
-2. Install Firebase CLI: <br/>
+4. Install Firebase CLI: <br/>
 `npm install -g firebase-tools`
-3. Log in to Firebase: <br/>
+5. Log in to Firebase: <br/>
 `firebase login`<br/>
 When you run this command, it will ask if Firebase can collect ULI usage and error, just type `Y`<br/>
 Then it will open a window, there you log into your Google Account
-4. Initialize your Firebase CLI <br/>
+4. Initialize your Firebase CLI: <br/>
+`firebase init`<br/>
+When you run this command, it will ask you which features to select, select all of them. To select click on space, and to go down click on the down key. Click enter when you finish selecting them all.<br/>
 
---Installing Linux, to try this out
+Next, it will ask you to set up a default Firebase project. Select the project which contains your database, from the *Set Up Firebase Section.*<br/>
 
+After that, just keep clicking enter. Until it asks for what language to use. <br/>
+
+Chose `JavaScript` when it askes for what language to use for Cloud Function. <br/>
+Then, type `y` for when it askes if you want to use ESLint <br/>
+Next, type `Y` when it askes to install dependencies. <br/>
+After that, click enter when it askes to use your public directory. <br/>
+Then, type `y` for when it askes to configure it as a single-page app. <br/>
+Finally, click enter for when it asks about Storage Rules. 
+
+#### Download Google Earth
+1. On Linux, open the browser and go to the Google Earth [download page](https://www.google.com/earth/download/gep/agree.html).
+2. Download and install it, by using the default software install (or any other way to install it).
+
+#### Editing Google Earth
+1. Navigate to Google Earth folder:
+`cd /opt/google/earth/pro`
+2. Edit drivers.ini file with Root privileges:
+`sudo nano drivers.ini`
+Between `SETTINGS{` and `CPUVertexBlendEfficiency = 1.2`, type in the following:
+`;ViewSync settings`<br/>
+`ViewSync/queryFile = /tmp/query.txt`<br/>
+`ViewSync/send = true`<br/>
+Click Ctrl-X<br/>
+Then `Y` to Save
+3. drivers.ini should look like [this](https://github.com/MyWorldRules/LGxVoiceControl/blob/master/README%20Assets/drivers.ini.PNG?raw=true). 
+
+#### Controlling Google Earth
+1. Download Script:
+`wget https://raw.githubusercontent.com/MyWorldRules/LGxVoiceControl/master/LGScript.sh`
+2. Edit Script
+`nano LGScript.sh`<br/>
+Use the arrow keys to go down to `firebase database:get /BROADNAME/country > messages.txt`. Replace *BROADNAME* with the Broad Name from the Firebase database.<br/>
+Click Ctrl-X<br/>
+Then `Y` to Save
+3. Give execute permission to the script:
+`chmod +x LGScript.sh`
+5. Open Google Earth
+6. Run the script:
+`./LGScript.sh`
+Note: The first time you run the file, you will get a error. From the second time onward there will be no error. 
+7. To stop the script, simply click Ctrl-C
